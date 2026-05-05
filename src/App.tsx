@@ -11,7 +11,7 @@ import SocialProof from './components/SocialProof';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
-import Lenis from '@studio-freight/lenis';
+import Lenis from 'lenis';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -52,7 +52,7 @@ function App() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
         >
           <CustomCursor />
           <Navbar />

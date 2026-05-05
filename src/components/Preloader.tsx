@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 
 interface PreloaderProps {
   onComplete: () => void;
@@ -12,36 +13,48 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
   const brandName = "MAGMAZOES";
 
   useEffect(() => {
+    let completeTimeout: ReturnType<typeof setTimeout>;
+    let exitTimeout: ReturnType<typeof setTimeout>;
+
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(() => {
+          exitTimeout = setTimeout(() => {
             setIsLoaded(true);
-            setTimeout(onComplete, 800); // Wait for fade out animation
+            completeTimeout = setTimeout(() => {
+              if (typeof onComplete === 'function') {
+                onComplete();
+              }
+            }, 850);
           }, 500);
           return 100;
         }
-        return prev + Math.random() * 15;
+        const next = prev + Math.random() * 15;
+        return next > 100 ? 100 : next;
       });
     }, 100);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(exitTimeout);
+      clearTimeout(completeTimeout);
+    };
   }, [onComplete]);
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     exit: {
       opacity: 0,
       scale: 1.1,
       filter: "blur(20px)",
       transition: {
         duration: 0.8,
-        ease: [0.76, 0, 0.24, 1]
+        ease: "easeInOut"
       }
     }
   };
 
-  const letterVariants = {
+  const letterVariants: Variants = {
     initial: { 
       opacity: 0, 
       y: 20,
@@ -54,16 +67,16 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
       transition: {
         duration: 0.5,
         delay: i * 0.05,
-        ease: [0.215, 0.61, 0.355, 1]
+        ease: "easeOut"
       }
     })
   };
 
-  const textFillVariants = {
+  const textFillVariants: Variants = {
     initial: {
       WebkitTextStroke: "1px rgba(255, 255, 255, 0.3)",
       color: "transparent",
-    },
+    } as any,
     animate: {
       WebkitTextStroke: "1px rgba(255, 255, 255, 0)",
       color: "rgba(255, 255, 255, 1)",
@@ -72,7 +85,7 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
         delay: 0.5,
         ease: "easeInOut"
       }
-    }
+    } as any
   };
 
   return (
@@ -95,7 +108,7 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
               className="flex items-center justify-center mb-12 relative"
               initial={{ letterSpacing: "0.1em", opacity: 0 }}
               animate={{ letterSpacing: "0.4em", opacity: 1 }}
-              transition={{ duration: 2.5, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 2.5, ease: "easeOut" }}
             >
               {brandName.split("").map((letter, i) => (
                 <motion.span
