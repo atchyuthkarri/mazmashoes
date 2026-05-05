@@ -1,136 +1,69 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
 const Hero = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-[#0a0a0a]"
-    >
-      {/* Background elements */}
+    <section className="relative h-screen min-h-[700px] flex items-center overflow-hidden bg-[#eeeeee]">
+      {/* Background Image / Video (Adidas Style) */}
       <div className="absolute inset-0 z-0">
-        {/* Removed radial glow */}
+        <img 
+          src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=1920&q=80" 
+          alt="Hero Background" 
+          className="w-full h-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/10"></div>
       </div>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)]">
-
-        {/* Text Content */}
-        <motion.div
-          style={{ y, opacity }}
-          className="flex flex-col items-start justify-center space-y-8"
-        >
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        <div className="max-w-2xl text-white">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex items-center space-x-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md"
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="bg-black/40 backdrop-blur-sm p-8 md:p-12 inline-block border-l-8 border-black"
           >
-            <span className="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
-            <span className="text-xs font-bold tracking-widest uppercase">New Drop: Apex Nova</span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-none mb-6 tracking-tight italic">
+              SPEED <br/>
+              REDEFINED.
+            </h1>
+            <p className="text-lg md:text-xl font-bold mb-10 max-w-md uppercase tracking-tight">
+              The all-new Apex Nova collection. Engineered for those who move faster.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <motion.button
+                whileHover={{ scale: 1.02, x: 5 }}
+                whileTap={{ scale: 0.98 }}
+                className="bg-white text-black px-10 py-4 font-black uppercase tracking-widest flex items-center justify-center space-x-4 group"
+              >
+                <span>SHOP NOW</span>
+                <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform duration-300" />
+              </motion.button>
+              
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="bg-transparent border-2 border-white text-white px-10 py-4 font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-300"
+              >
+                DISCOVER MORE
+              </motion.button>
+            </div>
           </motion.div>
-
-          <h1 className="text-6xl md:text-8xl lg:text-[10rem] leading-[0.85] font-heading font-black tracking-tighter uppercase">
-            <motion.span
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="block"
-            >
-              Step
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="block text-stroke"
-            >
-              Into
-            </motion.span>
-            <motion.span
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="block text-brand"
-            >
-              Icons.
-            </motion.span>
-          </h1>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 0.6 }}
-            className="text-gray-400 text-lg md:text-xl max-w-md font-light"
-          >
-            Elevate your streetwear game with exclusive drops, limited editions, and premium sneaker culture.
-          </motion.p>
-
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative overflow-hidden bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider flex items-center space-x-3 transition-transform hover:scale-105"
-          >
-            <span className="relative z-10">Explore Collection</span>
-            <ArrowRight className="relative z-10 group-hover:translate-x-1 transition-transform" size={20} />
-            <div className="absolute inset-0 bg-brand transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out z-0"></div>
-            <span className="absolute inset-0 flex items-center justify-center space-x-3 z-10 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <span>Explore Collection</span>
-              <ArrowRight className="translate-x-1" size={20} />
-            </span>
-          </motion.button>
-        </motion.div>
-
-        {/* 3D/Floating Sneaker Image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-          animate={{ opacity: 1, scale: 1, rotate: 0 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          className="relative h-full flex items-center justify-center lg:justify-end"
-          style={{ perspective: 1000 }}
-        >
-          <motion.img
-            animate={{
-              y: [0, -20, 0],
-              rotate: [0, 2, -2, 0]
-            }}
-            transition={{
-              repeat: Infinity,
-              duration: 6,
-              ease: "easeInOut"
-            }}
-            src="/assets/hero-image.jpg"
-            alt="Premium Sneaker"
-            className="w-full max-w-2xl object-contain mix-blend-screen z-10"
-          />
-        </motion.div>
-
+        </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center space-y-2 text-white/50"
-      >
-        <span className="text-xs uppercase tracking-[0.2em] font-bold">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
-          className="w-[1px] h-12 bg-gradient-to-b from-white/50 to-transparent"
-        ></motion.div>
-      </motion.div>
+      {/* Side Label (Adidas-esque) */}
+      <div className="absolute right-12 bottom-12 hidden lg:block">
+        <div className="flex items-center space-x-6 transform rotate-90 origin-right">
+          <span className="text-xs font-black uppercase tracking-[0.5em] text-white">AUTUMN WINTER 2026</span>
+          <div className="w-24 h-[2px] bg-white"></div>
+        </div>
+      </div>
+
+      {/* Centered Scroll Indicator (Clean) */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center">
+        <div className="w-[1px] h-10 bg-white/50"></div>
+      </div>
     </section>
   );
 };

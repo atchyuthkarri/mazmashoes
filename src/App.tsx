@@ -8,6 +8,7 @@ import TrendingSneakers from './components/TrendingSneakers';
 import HypeDrops from './components/HypeDrops';
 import About from './components/About';
 import SocialProof from './components/SocialProof';
+import Testimonials from './components/Testimonials';
 import CTA from './components/CTA';
 import Footer from './components/Footer';
 import CustomCursor from './components/CustomCursor';
@@ -45,7 +46,7 @@ function App() {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden bg-[#0a0a0a] text-[#f5f5f5]">
+    <div className="relative w-full overflow-hidden bg-white text-black">
       <Preloader onComplete={handleLoadingComplete} />
       
       {!loading && (
@@ -63,6 +64,7 @@ function App() {
             <HypeDrops />
             <About />
             <SocialProof />
+            <Testimonials />
             <CTA />
           </main>
           <Footer />

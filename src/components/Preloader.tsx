@@ -26,14 +26,14 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
               if (typeof onComplete === 'function') {
                 onComplete();
               }
-            }, 850);
-          }, 500);
+            }, 600);
+          }, 400);
           return 100;
         }
-        const next = prev + Math.random() * 15;
+        const next = prev + Math.random() * 20;
         return next > 100 ? 100 : next;
       });
-    }, 100);
+    }, 80);
 
     return () => {
       clearInterval(timer);
@@ -44,48 +44,28 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
 
   const containerVariants: Variants = {
     exit: {
-      opacity: 0,
-      scale: 1.1,
-      filter: "blur(20px)",
+      y: "-100%",
       transition: {
-        duration: 0.8,
-        ease: "easeInOut"
+        duration: 0.6,
+        ease: [0.77, 0, 0.175, 1]
       }
     }
   };
 
   const letterVariants: Variants = {
     initial: { 
-      opacity: 0, 
-      y: 20,
-      filter: "blur(10px)"
+      y: 100,
+      opacity: 0
     },
     animate: (i: number) => ({
-      opacity: 1,
       y: 0,
-      filter: "blur(0px)",
+      opacity: 1,
       transition: {
         duration: 0.5,
-        delay: i * 0.05,
-        ease: "easeOut"
+        delay: i * 0.03,
+        ease: [0.215, 0.61, 0.355, 1]
       }
     })
-  };
-
-  const textFillVariants: Variants = {
-    initial: {
-      WebkitTextStroke: "1px rgba(255, 255, 255, 0.3)",
-      color: "transparent",
-    } as any,
-    animate: {
-      WebkitTextStroke: "1px rgba(255, 255, 255, 0)",
-      color: "rgba(255, 255, 255, 1)",
-      transition: {
-        duration: 1.5,
-        delay: 0.5,
-        ease: "easeInOut"
-      }
-    } as any
   };
 
   return (
@@ -94,102 +74,45 @@ const Preloader = ({ onComplete }: PreloaderProps) => {
         <motion.div
           variants={containerVariants}
           exit="exit"
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505] overflow-hidden"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black overflow-hidden"
         >
-          {/* Subtle Grain Overlay */}
-          <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-          
-          {/* Subtle Vignette */}
-          <div className="absolute inset-0 bg-radial-vignette pointer-events-none"></div>
-
           <div className="relative flex flex-col items-center">
-            {/* Brand Name */}
-            <motion.div 
-              className="flex items-center justify-center mb-12 relative"
-              initial={{ letterSpacing: "0.1em", opacity: 0 }}
-              animate={{ letterSpacing: "0.4em", opacity: 1 }}
-              transition={{ duration: 2.5, ease: "easeOut" }}
-            >
-              {brandName.split("").map((letter, i) => (
-                <motion.span
-                  key={i}
-                  custom={i}
-                  variants={letterVariants}
-                  initial="initial"
-                  animate="animate"
-                  className="relative text-5xl md:text-8xl font-heading font-black uppercase inline-block"
-                >
+            {/* Brand Name - Bold Adidas Style Reveal */}
+            <div className="overflow-hidden mb-8">
+              <div className="flex items-center justify-center">
+                {brandName.split("").map((letter, i) => (
                   <motion.span
-                    variants={textFillVariants}
+                    key={i}
+                    custom={i}
+                    variants={letterVariants}
                     initial="initial"
                     animate="animate"
+                    className="text-5xl md:text-8xl font-black italic text-white uppercase tracking-tighter inline-block"
                   >
                     {letter}
                   </motion.span>
-                  
-                  {/* Premium Glitch/Ghosting Effect */}
-                  <motion.span
-                    animate={{
-                      opacity: [0, 0.4, 0],
-                      x: [0, -1, 1, 0],
-                      skewX: [0, 5, -5, 0]
-                    }}
-                    transition={{
-                      duration: 0.1,
-                      repeat: Infinity,
-                      repeatDelay: Math.random() * 3 + 1,
-                    }}
-                    className="absolute inset-0 text-brand mix-blend-screen opacity-0 pointer-events-none filter blur-[1px]"
-                  >
-                    {letter}
-                  </motion.span>
-                </motion.span>
-              ))}
-              
-              {/* Shine Sweep Overlay */}
-              <motion.div
-                initial={{ left: "-100%" }}
-                animate={{ left: "200%" }}
-                transition={{ duration: 2, repeat: Infinity, repeatDelay: 0.5, ease: "easeInOut" }}
-                className="absolute top-0 w-24 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[30deg] pointer-events-none blur-sm"
-              />
-            </motion.div>
+                ))}
+              </div>
+            </div>
 
-            {/* Progress Container */}
-            <div className="w-40 md:w-56 h-[1px] bg-white/5 relative overflow-hidden">
+            {/* Simple Progress Bar */}
+            <div className="w-48 md:w-64 h-[4px] bg-white/10 relative">
               <motion.div 
                 className="absolute inset-y-0 left-0 bg-white"
                 initial={{ width: 0 }}
                 animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0.1 }}
               />
             </div>
 
-            {/* Status Indicator */}
-            <div className="mt-6 flex flex-col items-center space-y-1">
-              <motion.div 
-                className="font-mono text-[8px] tracking-[0.5em] uppercase text-white/30"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                ESTABLISHING CONNECTION
-              </motion.div>
-              <motion.div 
-                className="font-mono text-[10px] tracking-[0.2em] uppercase text-white/60"
-              >
-                {Math.round(progress)}%
-              </motion.div>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              className="mt-6 font-black text-[10px] tracking-[0.4em] uppercase text-white"
+            >
+              LOADING / {Math.round(progress)}%
+            </motion.div>
           </div>
-
-          {/* Background Decorative Element */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 0.05, scale: 1 }}
-            transition={{ duration: 2 }}
-            className="absolute -bottom-24 -right-24 w-96 h-96 border border-white rounded-full pointer-events-none"
-          />
         </motion.div>
       )}
     </AnimatePresence>

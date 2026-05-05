@@ -2,60 +2,47 @@ import { motion } from 'framer-motion';
 
 const About = () => {
   return (
-    <section id="about" className="py-24 bg-white text-[#0a0a0a] relative overflow-hidden clip-path-slant -mt-10 pb-36 z-20">
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+    <section id="about" className="py-24 bg-[#eeeeee] overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 border-2 border-black">
+
+          <div className="relative h-[400px] lg:h-auto overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1000&q=80"
+              alt="Brand Heritage"
+              className="w-full h-full object-cover hover:scale-105 transition-all duration-700"
+            />
+            <div className="absolute inset-0 bg-black/10"></div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8 order-2 lg:order-1"
+            className="p-10 md:p-20 bg-white flex flex-col justify-center items-start space-y-8"
           >
-            <h2 className="text-5xl md:text-7xl font-heading font-black tracking-tighter uppercase leading-[0.9]">
-              More Than <br/> Just Shoes.
+            <h2 className="text-4xl md:text-6xl font-black italic leading-[0.9] tracking-tighter">
+              BORN FROM <br /> THE STREETS.
             </h2>
-            
-            <p className="text-gray-600 text-lg md:text-xl max-w-md font-light leading-relaxed">
-              We are a curated premium sneaker boutique dedicated to authentic streetwear culture. Born from the streets, built for the collectors. We source the rarest drops and most coveted collaborations worldwide.
+
+            <p className="text-lg font-bold uppercase tracking-tight text-gray-700 max-w-md">
+              Magmazoes represents more than just footwear. We represent a movement. A culture. A relentless pursuit of perfection in style and performance.
             </p>
 
-            <div className="grid grid-cols-2 gap-8 pt-6">
+            <div className="grid grid-cols-2 gap-12 w-full border-t-2 border-gray-100 pt-8">
               <div>
-                <h4 className="text-4xl font-heading font-black text-brand mb-2">10k+</h4>
-                <p className="text-sm font-bold uppercase tracking-widest text-gray-500">Happy Customers</p>
+                <h4 className="text-3xl font-black italic mb-2">100%</h4>
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Authentic Gear</p>
               </div>
               <div>
-                <h4 className="text-4xl font-heading font-black text-brand mb-2">100%</h4>
-                <p className="text-sm font-bold uppercase tracking-widest text-gray-500">Authentic Guaranteed</p>
+                <h4 className="text-3xl font-black italic mb-2">GLOBAL</h4>
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Shipping Network</p>
               </div>
             </div>
 
-            <button className="border-2 border-[#0a0a0a] text-[#0a0a0a] px-8 py-4 font-bold uppercase tracking-wider hover:bg-[#0a0a0a] hover:text-white transition-colors duration-300">
-              Read Our Story
+            <button className="bg-black text-white px-12 py-5 font-black uppercase tracking-widest hover:bg-gray-800 transition-colors">
+              READ OUR STORY
             </button>
-          </motion.div>
-
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1 }}
-            className="relative order-1 lg:order-2"
-          >
-            <div className="grid grid-cols-2 gap-4">
-              <img 
-                src="https://images.unsplash.com/photo-1552346154-21d32810baa3?w=800&q=80" 
-                alt="Store Front" 
-                className="w-full h-[300px] object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500"
-              />
-              <img 
-                src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=800&q=80" 
-                alt="Sneaker Shelf" 
-                className="w-full h-[300px] object-cover rounded-2xl mt-12 grayscale hover:grayscale-0 transition-all duration-500"
-              />
-            </div>
           </motion.div>
 
         </div>
